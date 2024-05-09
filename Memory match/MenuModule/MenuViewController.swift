@@ -98,20 +98,22 @@ private extension MenuViewController {
     }
     
     func addPlayNowButtonAction() {
+        playNowButton.addTarget(self, action: #selector(openGameVc), for: .touchUpInside)
+    }
+    
+    @objc func openGameVc() {
         let vc = GameViewController()
-        let action = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(vc, animated: true)
-        }
-        playNowButton.addAction(action, for: .touchUpInside)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func addPrivacyPolicyButtonAction() {
+        privacyPolicyButton.addTarget(self, action: #selector(openSafariVc), for: .touchUpInside)
+    }
+    
+    @objc func openSafariVc() {
         guard let url = URL(string: "https://www.apple.com/apple-events/event-stream/") else { return }
         let vc = createSafariVC(url: url)
-        let action = UIAction { [weak self] _ in
-            self?.present(vc, animated: true)
-        }
-        privacyPolicyButton.addAction(action, for: .touchUpInside)
+        present(vc, animated: true)
     }
     
     func createSafariVC(url: URL) -> SFSafariViewController {

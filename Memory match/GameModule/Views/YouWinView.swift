@@ -66,7 +66,7 @@ final class YouWinView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
     
     private func commonInit() {
@@ -75,6 +75,12 @@ final class YouWinView: UIView {
         addSubviews()
         makeConstraints()
         addButtonsTargets()
+    }
+    
+    func setResult(moves: String?, time: String?) {
+        guard let moves = moves, let time = time else { return }
+        movesLabel.text = "MOVES: \(moves)"
+        timeLabel.text = "TIME: \(time)"
     }
 }
 
@@ -143,7 +149,7 @@ private extension YouWinView {
     }
 }
 
-//MARK: - Delegate
+//MARK: - YouWinView Delegate
 
 protocol YouWinViewDelegate: AnyObject {
     func refreshButtonPressed()

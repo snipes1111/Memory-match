@@ -53,7 +53,7 @@ private extension LaunchViewController {
     }
     // Simulate loading date to show animtion
     func performTransitionAfter(_ delay: Double) {
-        guard let fromView = self.navigationController?.view else { return }
+        guard let fromView = navigationController?.view else { return }
         animator.animateTransition(delay: delay, fromView: fromView) { [weak self] in
             self?.navigationController?.pushViewController(MenuViewController(), animated: false)
         }

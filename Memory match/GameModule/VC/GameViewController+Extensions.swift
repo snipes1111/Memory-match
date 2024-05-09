@@ -6,35 +6,17 @@
 //
 
 import UIKit
-
-
-//MARK: - CollectionView extensions
-extension GameViewController {
-    func setupCollectionView() {
-        dataSource = makeDataSource()
-        cardsCollectionView.dataSource = dataSource
-        cardsCollectionView.delegate = self
-        updateSnapshot()
-    }
-}
-
-extension GameViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = dataSource?.itemIdentifier(for: indexPath) else { return }
-        viewModel?.cardDidTapped(item) { [weak self] in
-            self?.updateSnapshot()
-        }
-    }
-}
+import Combine
 
 //MARK: - Subsriptions
-
 extension GameViewController {
-    func subscribeToTimer() {
-        viewModel?.$currentTime
-            .sink { [weak self] time in
+    
+    func subscribeToGameInfo() {
+        guard let viewModel = viewModel else { return }
+        Publishers.CombineLatest(viewModel.$currentTime, viewModel.$moves)
+            .sink { [weak self] time, moves in
                 self?.timeLabel.text = "TIME: \(time)"
+                self?.movesLabel.text = "MOVES: \(String(moves))"
             }
             .store(in: &cancellables)
     }
@@ -49,14 +31,6 @@ extension GameViewController {
             .store(in: &cancellables)
     }
     
-    func subscribeToMoves() {
-        viewModel?.$moves
-            .sink { [weak self] num in
-                self?.movesLabel.text = "MOVES: \(String(num))"
-            }
-            .store(in: &cancellables)
-    }
-    
     func subscribeToWinStatus() {
         viewModel?.$gameIsFinished
             .dropFirst()
@@ -67,4 +41,12 @@ extension GameViewController {
             .store(in: &cancellables)
     }
     
+    func subscribeToSettings() {
+        guard let viewModel = viewModel else { return }
+        Publishers.CombineLatest(viewModel.$soundIsOn, viewModel.$vibroIsOn)
+            .sink { [weak self] soundIsOn, vibroIsOn in
+                self?.settingsView.configureWith(soundIsOn, vibroIsOn)
+            }
+            .store(in: &cancellables)
+    }
 }

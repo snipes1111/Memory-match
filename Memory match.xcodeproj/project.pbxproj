@@ -28,6 +28,9 @@
 		CEA55D342BEA83970027247A /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA55D332BEA83970027247A /* GameService.swift */; };
 		CEA55D362BEB9E600027247A /* YouWinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA55D352BEB9E600027247A /* YouWinView.swift */; };
 		CEA55D382BEBCEAF0027247A /* GameViewController+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA55D372BEBCEAE0027247A /* GameViewController+Delegates.swift */; };
+		CEA55D3F2BED16750027247A /* flip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CEA55D3E2BED16740027247A /* flip.mp3 */; };
+		CEA55D432BED17750027247A /* AVPlayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA55D422BED17750027247A /* AVPlayer+Extensions.swift */; };
+		CEA55D452BED2DD60027247A /* GameViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA55D442BED2DD60027247A /* GameViewController+Constraints.swift */; };
 		CEB056102BE917AB001F3F89 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0560F2BE917AB001F3F89 /* MenuViewController.swift */; };
 		CEB056172BE91A95001F3F89 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB056162BE91A95001F3F89 /* UIImageView+Extensions.swift */; };
 		CEB0561A2BE92B12001F3F89 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB056192BE92B12001F3F89 /* GameViewController.swift */; };
@@ -57,6 +60,9 @@
 		CEA55D332BEA83970027247A /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
 		CEA55D352BEB9E600027247A /* YouWinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouWinView.swift; sourceTree = "<group>"; };
 		CEA55D372BEBCEAE0027247A /* GameViewController+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameViewController+Delegates.swift"; sourceTree = "<group>"; };
+		CEA55D3E2BED16740027247A /* flip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = flip.mp3; sourceTree = "<group>"; };
+		CEA55D422BED17750027247A /* AVPlayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Extensions.swift"; sourceTree = "<group>"; };
+		CEA55D442BED2DD60027247A /* GameViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameViewController+Constraints.swift"; sourceTree = "<group>"; };
 		CEB0560F2BE917AB001F3F89 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		CEB056162BE91A95001F3F89 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		CEB056192BE92B12001F3F89 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +130,36 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		CEA55D3B2BED0E740027247A /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				CEB056192BE92B12001F3F89 /* GameViewController.swift */,
+				CEA55D442BED2DD60027247A /* GameViewController+Constraints.swift */,
+				CEA55D282BEA5A080027247A /* GameViewController+CollectionView.swift */,
+				CEA55D2A2BEA5C7A0027247A /* GameViewController+Extensions.swift */,
+				CEA55D372BEBCEAE0027247A /* GameViewController+Delegates.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		CEA55D3C2BED0E820027247A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CEA55D172BE94DD30027247A /* CardCell.swift */,
+				CEA55D2C2BEA6F430027247A /* SettingsView.swift */,
+				CEA55D352BEB9E600027247A /* YouWinView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CEA55D3D2BED0E8F0027247A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CEA55D2E2BEA80C20027247A /* GameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CEB0560C2BE907CF001F3F89 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +168,7 @@
 				CEA55D192BE95F280027247A /* UILabel+Extensions.swift */,
 				CEA55D202BE96A1F0027247A /* UIButton+Extensions.swift */,
 				CEA55D222BEA44580027247A /* UIStackView+Extensions.swift */,
+				CEA55D422BED17750027247A /* AVPlayer+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -174,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				CE31AAE42BE533CA00AFFBBA /* Assets.xcassets */,
+				CEA55D3E2BED16740027247A /* flip.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -181,14 +219,9 @@
 		CEB056182BE92A8D001F3F89 /* GameModule */ = {
 			isa = PBXGroup;
 			children = (
-				CEB056192BE92B12001F3F89 /* GameViewController.swift */,
-				CEA55D282BEA5A080027247A /* GameViewController+CollectionView.swift */,
-				CEA55D2A2BEA5C7A0027247A /* GameViewController+Extensions.swift */,
-				CEA55D372BEBCEAE0027247A /* GameViewController+Delegates.swift */,
-				CEA55D172BE94DD30027247A /* CardCell.swift */,
-				CEA55D2C2BEA6F430027247A /* SettingsView.swift */,
-				CEA55D352BEB9E600027247A /* YouWinView.swift */,
-				CEA55D2E2BEA80C20027247A /* GameViewModel.swift */,
+				CEA55D3B2BED0E740027247A /* VC */,
+				CEA55D3C2BED0E820027247A /* Views */,
+				CEA55D3D2BED0E8F0027247A /* ViewModel */,
 			);
 			path = GameModule;
 			sourceTree = "<group>";
@@ -253,6 +286,7 @@
 			files = (
 				CE31AAE82BE533CA00AFFBBA /* LaunchScreen.storyboard in Resources */,
 				CE31AAE52BE533CA00AFFBBA /* Assets.xcassets in Resources */,
+				CEA55D3F2BED16750027247A /* flip.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +306,9 @@
 				CEA55D212BE96A1F0027247A /* UIButton+Extensions.swift in Sources */,
 				CEA55D342BEA83970027247A /* GameService.swift in Sources */,
 				CEA55D322BEA81000027247A /* GameCard.swift in Sources */,
+				CEA55D432BED17750027247A /* AVPlayer+Extensions.swift in Sources */,
 				CEB056172BE91A95001F3F89 /* UIImageView+Extensions.swift in Sources */,
+				CEA55D452BED2DD60027247A /* GameViewController+Constraints.swift in Sources */,
 				CE31AADC2BE533BE00AFFBBA /* AppDelegate.swift in Sources */,
 				CE31AAF02BE5356800AFFBBA /* LaunchViewController.swift in Sources */,
 				CEB056102BE917AB001F3F89 /* MenuViewController.swift in Sources */,

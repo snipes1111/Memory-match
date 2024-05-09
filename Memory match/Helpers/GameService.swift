@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+import AVFoundation
+import UIKit
 
 final class GameService {
     
@@ -22,6 +24,9 @@ final class GameService {
         return formatter
     }()
     
+    private lazy var player: AVPlayer = AVPlayer.sharedFlipPlayer
+    private lazy var feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
     private var timeInterval: TimeInterval = 0
     private var cancellable: Set<AnyCancellable> = []
     
@@ -29,7 +34,12 @@ final class GameService {
         fetchGameCards()
     }
     
+    deinit {
+        print("Service deinited")
+    }
+    
     func startGame() {
+        feedbackGenerator.prepare()
         startTimer()
     }
     
@@ -46,6 +56,17 @@ final class GameService {
         timeInterval = 0
         currentTime = "00:00"
         fetchGameCards()
+    }
+    
+    func performVibroFeedback() {
+        feedbackGenerator.impactOccurred()
+    }
+    
+    func playSound() {
+        DispatchQueue.main.async { [weak self] in
+            self?.player.seek(to: .zero)
+            self?.player.play()
+        }
     }
 }
 

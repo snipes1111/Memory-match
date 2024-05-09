@@ -11,17 +11,63 @@ import Combine
 final class GameViewModel {
     private var gameService: GameService = GameService()
     
-    @Published var currentTime: String = "00:00"
-    @Published var moves: Int = 0
-    @Published var gameCards: [GameCard] = []
-    @Published var gameIsStopped: Bool = false
-    @Published var gameIsFinished: Bool = false
+    @Published private(set) var currentTime: String = "00:00"
+    @Published private(set) var moves: Int = 0
+    @Published private(set) var gameCards: [GameCard] = []
+    @Published private(set) var gameIsStopped: Bool = false
+    @Published private(set) var gameIsFinished: Bool = false
+    @Published private(set) var vibroIsOn: Bool = true
+    @Published private(set) var soundIsOn: Bool = true
     private var openedCards: [GameCard] = []
     private var gameIsStarted: Bool = false
     
     init() {
         subscribeToTimer()
         fetchCards()
+    }
+    
+    func pauseButtonDidTapped() {
+        gameIsStopped.toggle()
+        if gameIsStopped { gameService.pauseTimer() }
+        else { gameService.continueTimer() }
+    }
+    
+    func refreshButtonDidTapped() {
+        gameIsStarted = false
+        moves = 0
+        openedCards.removeAll()
+        gameService.reloadGame()
+    }
+    
+    func cardDidTapped(_ item: GameCard, completion: () -> ()) {
+        guard item.isHidden else { return }
+        startGame()
+        checkOpenedCards()
+        showCards(item)
+        performEffects()
+        checkForWin()
+        completion()
+    }
+    
+    func switchVibro() {
+        vibroIsOn.toggle()
+    }
+    
+    func switchSound() {
+        soundIsOn.toggle()
+    }
+    
+    private func startGame() {
+        guard !gameIsStarted else { return }
+        gameIsStarted = true
+        gameService.startGame()
+    }
+    
+    private func performEffects() {
+        print(soundIsOn)
+        if vibroIsOn { gameService.performVibroFeedback() }
+        if soundIsOn { gameService.playSound() }
+        return
     }
     
     private func fetchCards() {
@@ -34,20 +80,6 @@ final class GameViewModel {
             .assign(to: &$currentTime)
     }
     
-    func cardDidTapped(_ item: GameCard, completion: () -> ()) {
-        guard item.isHidden else { return }
-        if !gameIsStarted {
-            gameIsStarted = true
-            gameService.startGame()
-        }
-        if openedCards.count == 2 {
-            checkOpenedCards()
-        }
-        showCards(item)
-        checkForWin()
-        completion()
-    }
-    
     private func showCards(_ item: GameCard) {
         guard let idx = gameCards.firstIndex(of: item) else { return }
         gameCards[idx].isHidden.toggle()
@@ -56,7 +88,6 @@ final class GameViewModel {
     }
     
     private func checkForWin() {
-        print(gameCards.filter({ $0.isHidden }).count)
         if gameCards.filter({ $0.isHidden }).isEmpty {
             gameIsFinished = true
             gameService.pauseTimer()
@@ -65,6 +96,7 @@ final class GameViewModel {
     }
     
     private func checkOpenedCards() {
+        guard openedCards.count == 2 else { return }
         guard let firstOpenedCard = openedCards.first,
               let secondOpenedCard = openedCards.last else { return }
         if firstOpenedCard.image == secondOpenedCard.image {
@@ -88,19 +120,6 @@ final class GameViewModel {
             gameCards[idx].isHidden.toggle()
         }
         openedCards.removeAll()
-    }
-    
-    func pauseButtonDidTapped() {
-        gameIsStopped.toggle()
-        if gameIsStopped { gameService.pauseTimer() }
-        else { gameService.continueTimer() }
-    }
-    
-    func refreshButtonDidTapped() {
-        gameIsStarted = false
-        moves = 0
-        openedCards.removeAll()
-        gameService.reloadGame()
     }
 }
 
