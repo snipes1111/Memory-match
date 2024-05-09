@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LaunchViewController: UIViewController {
+final class LaunchViewController: UIViewController {
     
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -27,7 +27,7 @@ class LaunchViewController: UIViewController {
         return label
     }()
     
-    private var animator: Animator?
+    private let animator = Animator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,14 +49,13 @@ class LaunchViewController: UIViewController {
 private extension LaunchViewController {
     // Add vertical animation
     func animateFireImageView(duration: Double) {
-        animator = Animator()
-        animator?.addLoadAnimation(view: fireImageView, duration: duration)
-        animator = nil
+        animator.addLoadAnimation(view: fireImageView, duration: duration)
     }
     // Simulate loading date to show animtion
-    func performTransitionAfter(_ duration: Double) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            self.navigationController?.pushViewController(MenuViewController(), animated: true)
+    func performTransitionAfter(_ delay: Double) {
+        guard let fromView = self.navigationController?.view else { return }
+        animator.animateTransition(delay: delay, fromView: fromView) { [weak self] in
+            self?.navigationController?.pushViewController(MenuViewController(), animated: false)
         }
     }
     

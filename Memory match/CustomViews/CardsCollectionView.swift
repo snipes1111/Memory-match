@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardsCollectionView: UICollectionView {
+final class CardsCollectionView: UICollectionView {
     init(superViewWidth: CGFloat, itemSpacing: CGFloat = 8, sideInsets: CGFloat = 16, itemsPerRow: CGFloat) {
         let layout = UICollectionViewFlowLayout()
         super.init(frame: .zero, collectionViewLayout: layout)

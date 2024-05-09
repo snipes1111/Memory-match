@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardCell: UICollectionViewCell {
+final class CardCell: UICollectionViewCell {
     
     private lazy var cardImageView: UIImageView = {
         let imageView = UIImageView()
@@ -22,6 +22,11 @@ class CardCell: UICollectionViewCell {
     
     private func commonInit() {
         setupCardImageView()
+    }
+    
+    func configureWith(gameCard: GameCard) {
+        cardImageView.image = gameCard.isHidden ? UIImage(resource: .slot) : UIImage(named: gameCard.image)
+        isUserInteractionEnabled = gameCard.isActive
     }
     
     func setupCardImageView() {

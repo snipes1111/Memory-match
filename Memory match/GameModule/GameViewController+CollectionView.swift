@@ -9,8 +9,8 @@ import UIKit
 
 extension GameViewController {
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, Int>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Int>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, GameCard>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, GameCard>
     
     enum Section {
         case baseCards
@@ -24,14 +24,15 @@ extension GameViewController {
         return dataSource
     }
     
-    func configureCell(cell: CardCell, indexPath: IndexPath, item: Int) {
-        
+    func configureCell(cell: CardCell, indexPath: IndexPath, item: GameCard) {
+        cell.configureWith(gameCard: item)
     }
     
     func updateSnapshot() {
+        guard let viewModel = viewModel else { return }
         var snapshot = Snapshot()
         snapshot.appendSections([.baseCards])
-        snapshot.appendItems(data, toSection: .baseCards)
-        dataSource?.apply(snapshot, animatingDifferences: false)
+        snapshot.appendItems(viewModel.gameCards, toSection: .baseCards)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }

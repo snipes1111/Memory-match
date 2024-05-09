@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SafariServices
 
-class MenuViewController: UIViewController {
+final class MenuViewController: UIViewController {
     
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -93,13 +94,30 @@ private extension MenuViewController {
     
     func addButtonTargets() {
         addPlayNowButtonAction()
+        addPrivacyPolicyButtonAction()
     }
     
     func addPlayNowButtonAction() {
+        let vc = GameViewController()
         let action = UIAction { [weak self] _ in
-            let vc = GameViewController()
             self?.navigationController?.pushViewController(vc, animated: true)
         }
         playNowButton.addAction(action, for: .touchUpInside)
+    }
+    
+    func addPrivacyPolicyButtonAction() {
+        guard let url = URL(string: "https://www.apple.com/apple-events/event-stream/") else { return }
+        let vc = createSafariVC(url: url)
+        let action = UIAction { [weak self] _ in
+            self?.present(vc, animated: true)
+        }
+        privacyPolicyButton.addAction(action, for: .touchUpInside)
+    }
+    
+    func createSafariVC(url: URL) -> SFSafariViewController {
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.preferredBarTintColor = .black
+        safariViewController.preferredControlTintColor = .white
+        return safariViewController
     }
 }
