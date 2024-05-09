@@ -34,10 +34,6 @@ final class GameService {
         fetchGameCards()
     }
     
-    deinit {
-        print("Service deinited")
-    }
-    
     func startGame() {
         feedbackGenerator.prepare()
         startTimer()
